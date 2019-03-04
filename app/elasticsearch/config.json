@@ -1,0 +1,6 @@
+{
+  "test": {
+    "index": "my_index",
+    "type": "_doc"
+  }
+}
