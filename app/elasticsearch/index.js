@@ -1,11 +1,11 @@
 require('dotenv').config()
+const { log } = console
 const ENV = process.env.NODE_ENV
 const elasticsearch = require('elasticsearch')
 const config = require('./config.json')[ENV]
 const client = new elasticsearch.Client({
   host: process.env.ELASTICSEARCH_URI
 })
-
 /**
  * delete document.
  * @param {String} indexName index name.
@@ -27,7 +27,6 @@ const deleteDocument = async indexName => {
     throw err
   }
 }
-
 /**
  * bulk index.
  * @param {Array} dataToBeIndexed array of object data to be indexed.
@@ -48,7 +47,6 @@ const bulkIndex = async dataToBeIndexed => {
     throw err
   }
 }
-
 module.exports = {
   deleteDocument,
   bulkIndex,

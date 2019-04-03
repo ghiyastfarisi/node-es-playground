@@ -1,6 +1,5 @@
 const { log } = console
 const es = require('./index')
-
 const toBeIndex = [
   {
     id: 1,
@@ -43,7 +42,7 @@ const toBeIndex = [
 
 const init = async () => {
   log(`>> initiate elasticsearch seeding...`)
-  log(`>> es.config: `, es.config)
+  log(`>> es.config.index: ${es.config.index} | es.config.type: ${es.config.type}`)
   try {
     // check index
     const indexExists = await es.client.indices.exists({
@@ -81,6 +80,8 @@ const init = async () => {
     })
     await es.bulkIndex(elasticsearchMapping)
   } catch (err) {
+    log(`[ERROR] on init: ${err}`)
+
     throw err
   }
 }
