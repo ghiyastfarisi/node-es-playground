@@ -1,5 +1,4 @@
 const { log } = console
-const util = require('./util')
 const es = require('./index')
 
 const toBeIndex = [
@@ -79,7 +78,7 @@ const init = async () => {
       }
     })
   })
-  await util.bulkIndex(elasticsearchMapping)
+  await es.bulkIndex(elasticsearchMapping)
 }
 
 module.exports = {

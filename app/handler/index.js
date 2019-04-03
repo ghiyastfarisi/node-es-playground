@@ -4,11 +4,11 @@ const es = require('../elasticsearch')
 const search = async (req, res, next) => {
   const start = new Date().getTime()
   try {
-    const mustQuery = [], sortQuery = [{'_id': 'desc'}]
-    let {
-      q,
+    const mustQuery = [],
+      sortQuery = [{'_id': 'desc'}]
+    let { q,
       page,
-      limit,
+      limit
     } = req.query
     if (!page) {
       page = 1
@@ -17,7 +17,6 @@ const search = async (req, res, next) => {
       limit = 5
     }
     if (q) {
-      // string manipulation here
       const queryStringQuery = `${q}*`
       mustQuery.push({
         query_string: {
