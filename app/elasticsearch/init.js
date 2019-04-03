@@ -44,41 +44,45 @@ const toBeIndex = [
 const init = async () => {
   log(`>> initiate elasticsearch seeding...`)
   log(`>> es.config: `, es.config)
-  // check index
-  const indexExists = await es.client.indices.exists({
-    index: es.config.index
-  })
-  if (!indexExists) {
-    log(`>> creating index...`)
-    // create index
-    await es.client.indices.create({
-      index: es.config.index,
-      body: {
-        type: es.config.type
-      }
+  try {
+    // check index
+    const indexExists = await es.client.indices.exists({
+      index: es.config.index
     })
+    if (!indexExists) {
+      log(`>> creating index...`)
+      // create index
+      await es.client.indices.create({
+        index: es.config.index,
+        body: {
+          type: es.config.type
+        }
+      })
+    }
+    const elasticsearchMapping = []
+    toBeIndex.forEach(element => {
+      elasticsearchMapping.push({
+        index: {
+          _index: es.config.index,
+          _type: es.config.type,
+          _id: element.id
+        }
+      })
+      elasticsearchMapping.push({
+        id: element.id,
+        name: element.name,
+        created: element.created,
+        power: {
+          attack: element.power.attack,
+          hit_point: element.power.hp,
+          mana_point: element.power.mp
+        }
+      })
+    })
+    await es.bulkIndex(elasticsearchMapping)
+  } catch (err) {
+    throw err
   }
-  const elasticsearchMapping = []
-  toBeIndex.forEach(element => {
-    elasticsearchMapping.push({
-      index: {
-        _index: es.config.index,
-        _type: es.config.type,
-        _id: element.id
-      }
-    })
-    elasticsearchMapping.push({
-      id: element.id,
-      name: element.name,
-      created: element.created,
-      power: {
-        attack: element.power.attack,
-        hit_point: element.power.hp,
-        mana_point: element.power.mp
-      }
-    })
-  })
-  await es.bulkIndex(elasticsearchMapping)
 }
 
 module.exports = {
