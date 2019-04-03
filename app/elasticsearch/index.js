@@ -13,7 +13,7 @@ const client = new elasticsearch.Client({
  */
 const deleteDocument = async indexName => {
   try {
-    return await es.client.deleteByQuery({
+    return await client.deleteByQuery({
       index: indexName,
       body: {
         query: {
@@ -34,7 +34,7 @@ const deleteDocument = async indexName => {
  */
 const bulkIndex = async dataToBeIndexed => {
   try {
-    const created = await es.client.bulk({
+    const created = await client.bulk({
       body: dataToBeIndexed
     })
 
