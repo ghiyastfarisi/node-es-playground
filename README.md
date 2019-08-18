@@ -1,2 +1,2 @@
 # node-es-playground
-nodejs + aws elasticsearch playground
+nodejs + elasticsearch playground
